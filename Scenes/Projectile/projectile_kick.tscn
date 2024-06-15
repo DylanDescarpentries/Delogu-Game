@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://budybi3s2gsq0"]
+
+[ext_resource type="Script" path="res://Scenes/Projectile/Script/projectileKick.gd" id="1_drnxv"]
+[ext_resource type="Texture2D" uid="uid://bxr6hsa2u8pgs" path="res://Scenes/Projectile/botte.png" id="2_0xyta"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ieos8"]
+radius = 8.0
+
+[node name="Projectile_kick" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_drnxv")
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
+position = Vector2(20.6667, 30.1667)
+scale = Vector2(0.0247396, 0.023763)
+texture = ExtResource("2_0xyta")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(22.3333, 29)
+shape = SubResource("CircleShape2D_ieos8")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://btxcbm0o3s3mu"]
+
+[ext_resource type="PackedScene" uid="uid://b3jxtkihkm5n1" path="res://Scenes/Projectile/projectile.tscn" id="2_8w1cx"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/Player.gd" id="2_t0183"]
+[ext_resource type="Texture2D" uid="uid://bcjy074k4wctw" path="res://Scenes/Player/Sprites/Delogu.png" id="3_ha30v"]
+[ext_resource type="PackedScene" uid="uid://budybi3s2gsq0" path="res://Scenes/Projectile/projectile_kick.tscn" id="3_owu04"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v67bd"]
+radius = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(80, 89)
+collision_mask = 0
+script = ExtResource("2_t0183")
+max_speed = 200.0
+projectile_scene = ExtResource("2_8w1cx")
+projectile_kick_scene = ExtResource("3_owu04")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.028, 0.032)
+texture = ExtResource("3_ha30v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_v67bd")

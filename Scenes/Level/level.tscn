@@ -1,0 +1,178 @@
+[gd_scene load_steps=9 format=3 uid="uid://b2r4dvpyci7vu"]
+
+[ext_resource type="PackedScene" uid="uid://btxcbm0o3s3mu" path="res://Scenes/Player/player.tscn" id="1_5ptfg"]
+[ext_resource type="Script" path="res://Scenes/Level/Script/level.gd" id="1_31136"]
+[ext_resource type="PackedScene" uid="uid://bsksddok0fukl" path="res://Scenes/Asteroid/asteroid.tscn" id="2_82c8k"]
+[ext_resource type="Script" path="res://Scenes/Level/Script/ProjectileFactory.gd" id="2_hi4yh"]
+[ext_resource type="Texture2D" uid="uid://cxwxsj1sf1ycr" path="res://Scenes/Level/Sprite/Marseille.jpg" id="3_2qdct"]
+[ext_resource type="Script" path="res://Scenes/UI/ScoreLayer.gd" id="6_tlt8p"]
+[ext_resource type="VideoStream" path="res://Scenes/Victory/video/won.ogv" id="8_7x681"]
+[ext_resource type="AudioStream" uid="uid://ckpdd58ixv2vv" path="res://Scenes/Level/Sounds/ABATTEZ LA CITADELLE .wav" id="8_fr8dt"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_31136")
+asteroid_scene = ExtResource("2_82c8k")
+
+[node name="BackGround" type="Sprite2D" parent="."]
+position = Vector2(240, 135)
+scale = Vector2(0.24, 0.202551)
+texture = ExtResource("3_2qdct")
+
+[node name="Player" parent="." instance=ExtResource("1_5ptfg")]
+z_index = 1
+position = Vector2(259, 131)
+accel_factor = 0.768
+rotation_accel_factor = 0.794
+
+[node name="ProjectileFactory" type="Node2D" parent="."]
+script = ExtResource("2_hi4yh")
+
+[node name="Asteroids" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="SpawnTimer" type="Timer" parent="Asteroids"]
+wait_time = 0.865
+autostart = true
+
+[node name="Border" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="Border"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = -20
+theme_override_constants/margin_top = -20
+theme_override_constants/margin_right = -20
+theme_override_constants/margin_bottom = -20
+
+[node name="BorderRect" type="ReferenceRect" parent="Border/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="ScoreLayer" type="CanvasLayer" parent="."]
+script = ExtResource("6_tlt8p")
+
+[node name="Score" type="Control" parent="ScoreLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 480.0
+offset_bottom = 40.0
+metadata/_edit_lock_ = true
+
+[node name="ScoreCount" type="Label" parent="ScoreLayer/Score"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Front Populaire : 0 votant.es"
+
+[node name="FafCount" type="Label" parent="ScoreLayer/Score"]
+layout_mode = 0
+offset_left = 264.0
+offset_right = 476.0
+offset_bottom = 23.0
+text = "Facho: 48700000 votant.es"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_fr8dt")
+autoplay = true
+bus = &"Music"
+
+[node name="GameOverLayer" type="CanvasLayer" parent="."]
+
+[node name="GameOver" type="Control" parent="GameOverLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="GameOverLayer/GameOver"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 29.0
+offset_top = -6.0
+offset_right = 29.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverLayer/GameOver/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="GameOverLayer/GameOver/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Game Over"
+
+[node name="RetryButton" type="Button" parent="GameOverLayer/GameOver/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Retry"
+
+[node name="GameWonLayer" type="CanvasLayer" parent="."]
+
+[node name="GameWon" type="Control" parent="GameWonLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GameWonLayer/GameWon"]
+layout_mode = 2
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="SubViewport" type="SubViewport" parent="GameWonLayer/GameWon/SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="GameWonLayer/GameWon/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.9, 0.7)
+stream = ExtResource("8_7x681")
+
+[node name="CenterContainer" type="CenterContainer" parent="GameWonLayer/GameWon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameWonLayer/GameWon/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="GameWonLayer/GameWon/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "L'extrême droite est vaincue !
+
+Le 30 juin vote !"
+horizontal_alignment = 1
+
+[connection signal="destroyed" from="Player" to="." method="_on_player_destroyed"]
+[connection signal="projectile_fired" from="Player" to="ProjectileFactory" method="_on_player_projectile_fired"]
+[connection signal="timeout" from="Asteroids/SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="pressed" from="GameOverLayer/GameOver/CenterContainer/VBoxContainer/RetryButton" to="." method="_on_retry_button_pressed"]
+[connection signal="finished" from="GameWonLayer/GameWon/SubViewportContainer/SubViewport/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

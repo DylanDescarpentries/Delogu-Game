@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3jxtkihkm5n1"]
+
+[ext_resource type="Script" path="res://Scenes/Projectile/Script/projectile.gd" id="1_tddp2"]
+[ext_resource type="Texture2D" uid="uid://ca7e4tsgatdpk" path="res://Scenes/Projectile/Sprites/palestine.jpg" id="2_ms1a8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ieos8"]
+radius = 7.0
+
+[node name="Projectile" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_tddp2")
+
+[node name="AnimatedSprite2D" type="Sprite2D" parent="."]
+position = Vector2(21, -7)
+scale = Vector2(0.0143229, 0.0182292)
+texture = ExtResource("2_ms1a8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(24, -7)
+shape = SubResource("CircleShape2D_ieos8")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

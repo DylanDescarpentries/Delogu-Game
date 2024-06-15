@@ -1,0 +1,82 @@
+[gd_scene load_steps=24 format=3 uid="uid://bsksddok0fukl"]
+
+[ext_resource type="Script" path="res://Scenes/Asteroid/Script/asteroid.gd" id="1_tiunh"]
+[ext_resource type="Script" path="res://Ressources/AsteroidPreset/asteroidPreset.gd" id="2_e2ald"]
+[ext_resource type="AudioStream" uid="uid://bc47jk7gec0vh" path="res://Scenes/Asteroid/Sounds/marine.wav" id="2_lvapo"]
+[ext_resource type="Texture2D" uid="uid://dg3xsiavslp6" path="res://Scenes/Asteroid/Sprites/lepen.png" id="3_rrc4u"]
+[ext_resource type="Texture2D" uid="uid://cbdmsvsxnmy26" path="res://Scenes/Asteroid/Sprites/meyer.png" id="4_s1kpj"]
+[ext_resource type="Texture2D" uid="uid://dwco1ymkiq26y" path="res://Scenes/Asteroid/Sprites/ennemiesHits/marine_botte.png" id="5_kvux3"]
+[ext_resource type="Texture2D" uid="uid://tnjlsrmtrc0w" path="res://Scenes/Asteroid/Sprites/ennemiesHits/macron_botte.png" id="5_qhoc7"]
+[ext_resource type="Texture2D" uid="uid://durnugt5o6006" path="res://Scenes/Asteroid/Sprites/ennemiesHits/merdella_botte.png" id="6_ep3cu"]
+[ext_resource type="AudioStream" uid="uid://cmr8sdivty2ja" path="res://Scenes/Asteroid/Sounds/macron.wav" id="6_k1hq7"]
+[ext_resource type="AudioStream" uid="uid://bfdqaka1uhkkk" path="res://Scenes/Asteroid/Sounds/merdella.wav" id="8_8gehj"]
+[ext_resource type="Texture2D" uid="uid://4a3lcimpbajr" path="res://Scenes/Asteroid/Sprites/ennemiesHits/meyer_botte.png" id="8_bfw1p"]
+[ext_resource type="AudioStream" uid="uid://dcl2n5i5rt3gm" path="res://Scenes/Asteroid/Sounds/meyer.wav" id="8_xcjj6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cvo00"]
+radius = 15.0333
+
+[sub_resource type="Resource" id="Resource_15cv8"]
+script = ExtResource("2_e2ald")
+texture = ExtResource("3_rrc4u")
+shape = SubResource("CircleShape2D_cvo00")
+texture_hit = ExtResource("5_kvux3")
+audio_hit = ExtResource("2_lvapo")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_acltm"]
+radius = 18.0278
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lpral"]
+load_path = "res://.godot/imported/macron.png-4f6ea9bed2e62060884e038957e2c926.ctex"
+
+[sub_resource type="Resource" id="Resource_w41yx"]
+script = ExtResource("2_e2ald")
+texture = SubResource("CompressedTexture2D_lpral")
+shape = SubResource("CircleShape2D_acltm")
+texture_hit = ExtResource("5_qhoc7")
+audio_hit = ExtResource("6_k1hq7")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mbamu"]
+radius = 14.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ubk04"]
+load_path = "res://.godot/imported/merdella.png-00fbd7349ee4a8d7a19dbe5b3df03ce5.ctex"
+
+[sub_resource type="Resource" id="Resource_tmnnu"]
+script = ExtResource("2_e2ald")
+texture = SubResource("CompressedTexture2D_ubk04")
+shape = SubResource("CircleShape2D_mbamu")
+texture_hit = ExtResource("6_ep3cu")
+audio_hit = ExtResource("8_8gehj")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nwvod"]
+radius = 13.0
+
+[sub_resource type="Resource" id="Resource_mqtbu"]
+script = ExtResource("2_e2ald")
+texture = ExtResource("4_s1kpj")
+shape = SubResource("CircleShape2D_nwvod")
+texture_hit = ExtResource("8_bfw1p")
+audio_hit = ExtResource("8_xcjj6")
+
+[sub_resource type="AudioStream" id="AudioStream_6c3nn"]
+
+[node name="Asteroid" type="Area2D"]
+collision_layer = 2
+script = ExtResource("1_tiunh")
+asteroid_preset_array = Array[ExtResource("2_e2ald")]([SubResource("Resource_15cv8"), SubResource("Resource_w41yx"), SubResource("Resource_tmnnu"), SubResource("Resource_mqtbu")])
+speed = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_cvo00")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_rrc4u")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStream_6c3nn")
+bus = &"SFX"
+area_mask = 7
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="size_changed" from="." to="." method="_on_size_changed"]
